@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ COPYRIGHT Ericsson 2022
+ ~
+ ~
+ ~
+ ~ The copyright to the computer program(s) herein is the property of
+ ~
+ ~ Ericsson Inc. The programs may be used and/or copied only with written
+ ~
+ ~ permission from Ericsson Inc. or in accordance with the terms and
+ ~
+ ~ conditions stipulated in the agreement/contract under which the
+ ~
+ ~ program(s) have been supplied.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+        <groupId>com.ericsson.nms</groupId>
+        <artifactId>integration</artifactId>
+        <version>15.2.0.38</version>
+        <relativePath/>
+  </parent>
+  <groupId>com.ericsson.oss.containerisation</groupId>
+  <artifactId>eric-odp-common-broker</artifactId>
+  <version>1.8.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>eric-odp-common-broker</name>
+
+  <scm>
+    <developerConnection>${ericsson.scm.url}</developerConnection>
+    <connection>${ericsson.scm.url}</connection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <!-- Set compiler Java version, MUST match the Dockerfile JDK version -->
+    <maven.compiler.release>11</maven.compiler.release>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <ericsson.scm.url>
+      scm:git:[fetch=]${GERRIT_CENTRAL}/OSS/ENM-Parent/SQ-Gate/com.ericsson.oss.containerisation/eric-odp-common-broker[push=]${GERRIT_CENTRAL}/OSS/ENM-Parent/SQ-Gate/com.ericsson.oss.containerisation/eric-odp-common-broker
+    </ericsson.scm.url>
+
+    <!-- 3PP Versions -->
+    <version.jackson-databind-nullable>0.2.6</version.jackson-databind-nullable>
+    <!-- Release Date: Feb 21, 2023 -->
+
+    <!-- https://bazaar.internal.ericsson.com/b-view-component.php?componentid=943461 - Release Date: Jul 14, 2020 -->
+
+    <!-- Ericsson Dependency Versions -->
+    <version.eric-common-logging>1.0.31</version.eric-common-logging>
+    <!-- Release Date: Apr 27, 2023 -->
+
+
+    <!-- Build Dependencies -->
+    <version.openapi-generator-maven-plugin>5.0.0</version.openapi-generator-maven-plugin>
+    <!-- Release Date: Dec 21, 2020 -->
+
+    <version.maven-sortpom-plugin>2.13.1</version.maven-sortpom-plugin>
+    <!-- Release Date: Jan 16, 2021 -->
+
+    <version.maven-scm-provider-gitexe>1.8.1</version.maven-scm-provider-gitexe>
+    <!-- Release Date: Oct 31, 2012 -->
+
+    <!-- Test Dependencies -->
+    <version.license-maven-plugin>3.0</version.license-maven-plugin>
+    <!-- Release Date: Aug 20, 2016 -->
+
+    <version.sonar-maven-plugin>3.8.0.2131</version.sonar-maven-plugin>
+    <!-- Release Date: Jan 14, 2021 -->
+
+    <!-- JaCoCo plugin for Java Code Coverage -->
+    <version.jcoco-maven.plugin>0.8.5</version.jcoco-maven.plugin>
+    <!-- Release Date: Oct 11, 2019 -->
+
+    <!-- Minimum ratio or percentage of instructions to be covered, used by
+            JaCoCo plugin. Industry standard is 0.8 or 80% which allows at least 80%
+            of the code to be covered by the test cases. -->
+    <jacoco-maven-plugin.coveredratio.minimum>0.5</jacoco-maven-plugin.coveredratio.minimum>
+
+<!-- Release Date: Jul 05, 2023 -->
+
+    <!-- Release Date: Jun 29, 2023 - - NOTE: Highest possible version. Execution error when updating to a version ≥ 4.0.0 -->
+
+    <!-- Release Date: Oct 28, 2022-->
+
+    <version.spock-core>2.4-M1-groovy-4.0</version.spock-core>
+    <!-- Release Date: Nov  30, 2022-->
+
+
+    <version.swagger-codegen>3.0.52</version.swagger-codegen>
+    <version.swagger-annotations>2.2.20</version.swagger-annotations>
+    <version.resteasy>3.15.7.Final-redhat-00001</version.resteasy>
+    <version.jackson-core>2.12.7</version.jackson-core>
+    <version.jackson-annotations>2.12.7</version.jackson-annotations>
+    <version.jackson-databind>2.12.7</version.jackson-databind>
+    <version.jackson-jaxrs-json-provider>2.12.7</version.jackson-jaxrs-json-provider>
+    <version.jackson-datatype-jsr310>2.12.6</version.jackson-datatype-jsr310>
+    <client.base.package.name>com.ericsson.oss.operator.client</client.base.package.name>
+
+  </properties>
+
+
+  <dependencies>
+
+    <!-- Required for Swagger Maven Plugin BEGIN-->
+    <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <version>1.3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${version.swagger-annotations}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <version>${version.resteasy}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-client</artifactId>
+      <version>${version.resteasy}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+      <version>${version.resteasy}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- JSON processing: jackson -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${version.jackson-core}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>${version.jackson-annotations}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${version.jackson-databind}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+      <version>${version.jackson-jaxrs-json-provider}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${version.jackson-datatype-jsr310}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${version.sonar-maven-plugin}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+    <modules>
+        <module>${project.artifactId}-api</module>
+    </modules>
+
+<!--
+  <distributionManagement>
+    <snapshotRepository>
+      <id>snapshot</id>
+      <name>armseligic-snapshot</name>
+      <url>https://arm.seli.gic.ericsson.se/artifactory/proj-eric-odp-dev-local</url>
+    </snapshotRepository>
+    <repository>
+      <id>release</id>
+      <name>armseligic-release</name>
+      <url>https://arm.seli.gic.ericsson.se/artifactory/proj-eric-odp-release-local</url>
+    </repository>
+  </distributionManagement>
+-->
+</project>
